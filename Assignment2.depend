@@ -1,0 +1,52 @@
+# depslib dependency file v1.0
+1781783682 source:c:\users\user\my drive\school\ict283\assignment2\calculate.cpp
+	"Calculate.h"
+
+1781951442 c:\users\user\my drive\school\ict283\assignment2\calculate.h
+	"Utils.h"
+
+1781784460 c:\users\user\my drive\school\ict283\assignment2\utils.h
+	"Date.h"
+	"Time.h"
+	"Vector.h"
+	<iostream>
+	<string>
+	<sstream>
+	<fstream>
+	<cmath>
+	<iomanip>
+
+1781601889 c:\users\user\my drive\school\ict283\assignment2\date.h
+	<iostream>
+
+1780987332 c:\users\user\my drive\school\ict283\assignment2\time.h
+	<iostream>
+	<string>
+	<sstream>
+	<iomanip>
+
+1781611768 c:\users\user\my drive\school\ict283\assignment2\vector.h
+	<stdexcept>
+	<string>
+
+1781784451 source:c:\users\user\my drive\school\ict283\assignment2\controller.cpp
+	"Controller.h"
+
+1781951471 c:\users\user\my drive\school\ict283\assignment2\controller.h
+	"Utils.h"
+	"Calculate.h"
+
+1780984864 source:c:\users\user\my drive\school\ict283\assignment2\date.cpp
+	"Date.h"
+	"DateFormatter.h"
+
+1780984939 c:\users\user\my drive\school\ict283\assignment2\dateformatter.h
+	"Date.h"
+	"Utils.h"
+
+1781783699 source:c:\users\user\my drive\school\ict283\assignment2\main.cpp
+	"Controller.h"
+
+1780987472 source:c:\users\user\my drive\school\ict283\assignment2\time.cpp
+	"Time.h"
+
