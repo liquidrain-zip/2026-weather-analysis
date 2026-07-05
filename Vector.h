@@ -1,11 +1,13 @@
 #ifndef VECTOR_H_INCLUDED
 #define VECTOR_H_INCLUDED
 
+#include <vector>
 #include <stdexcept>
 #include <string>
 
 using std::out_of_range;
 using std::to_string;
+using std::vector;
 
 /**
  * @brief Default initial size constant applied when allocation limits are missing or invalid.
@@ -14,11 +16,15 @@ const int INITIAL_CAPACITY = 20;
 
 /**
  * @class Vector
- * @brief A dynamic, self-resizing template array collection class.
+ * @brief A dynamic template array collection class encapsulating std::vector.
  *
  * @author 34528531
  * @version 01
  * @date 09/06/2026 34528531, Initial.
+ *
+ * @author 34528531
+ * @version 02
+ * @date 05/07/2026 34528531, Refactored to encapsulate std::vector.
  */
 template <class T>
 class Vector
@@ -26,22 +32,17 @@ class Vector
 public:
     /**
      * @brief Parameterized constructor.
-     * @param initialCapacity Starting size allocation limit for the heap storage array.
+     * @param initialCapacity Starting size allocation limit for the vector.
      */
     Vector(int initialCapacity);
 
     /**
-     * @brief Default constructor. Initializes empty vector mapped to INITIAL_CAPACITY.
+     * @brief Default constructor. Initializes empty vector reserved to INITIAL_CAPACITY.
      */
     Vector();
 
     /**
-     * @brief Destructor. Cleans up dynamically allocated heap memory blocks safely.
-     */
-    ~Vector();
-
-    /**
-     * @brief Copy constructor. Allocates a unique heap space and creates a deep copy.
+     * @brief Copy constructor. Creates a deep copy.
      * @param myVector Constant reference to the source vector being duplicated.
      */
     Vector(const Vector& myVector);
@@ -92,32 +93,20 @@ public:
     int getCount() const;
 
 private:
-    T* m_vector;
-    int m_capacity;
-    int m_count;
+    vector<T> m_vector;
 
     /**
      * @brief Retrieves current size limits for tracking array storage.
      * @return Integer value of capacity
      */
     int getCapacity() const;
-
-    /**
-     * @brief Doubles capacity
-     */
-    void Resize();
 };
+
 
 template <class T>
 Vector<T>::Vector()
 {
-    m_count = 0;
-    m_capacity = INITIAL_CAPACITY;
-    m_vector = new T[m_capacity];
-    if (m_vector == nullptr)
-    {
-        m_capacity = 0;
-    }
+    m_vector.reserve(INITIAL_CAPACITY);
 }
 
 template <class T>
@@ -125,62 +114,26 @@ Vector<T>::Vector(int initialCapacity)
 {
     if (initialCapacity > 0)
     {
-        m_capacity = initialCapacity;
+        m_vector.reserve(initialCapacity);
     }
     else
     {
-        m_capacity = INITIAL_CAPACITY;
-    }
-    m_vector = new T[m_capacity]; // attempt to get heap memory
-
-    if (m_vector == nullptr)
-    {
-        m_capacity = 0;
-    }
-    m_count = 0;
-}
-
-template <class T>
-Vector<T>::~Vector()
-{
-    if (m_vector != nullptr)
-    {
-        delete[] m_vector;
-        m_vector = nullptr;
+        m_vector.reserve(INITIAL_CAPACITY);
     }
 }
 
 template <class T>
 Vector<T>::Vector(const Vector& myVector)
 {
-    m_capacity = myVector.m_capacity;
-    m_count = myVector.m_count;
-    m_vector = nullptr;
-    m_vector = new T[m_capacity];
-    for (int i = 0; i < m_count; ++i)
-    {
-        m_vector[i] = myVector.m_vector[i];
-    }
+    m_vector = myVector.m_vector;
 }
 
 template <class T>
 Vector<T>& Vector<T>::operator = (const Vector& myVector)
 {
-    if (this == &myVector)
+    if (this != &myVector)
     {
-        return *this;
-    }
-
-    if (m_capacity != myVector.m_capacity || (m_capacity == 0 && myVector.m_capacity > 0) )
-    {
-        delete[] m_vector;
-        m_capacity = myVector.m_capacity;
-        m_vector = new T[m_capacity];
-    }
-    m_count = myVector.m_count;
-    for (int i = 0; i < m_count; ++i)
-    {
-        m_vector[i] = myVector.m_vector[i];
+        m_vector = myVector.m_vector;
     }
     return *this;
 }
@@ -188,7 +141,7 @@ Vector<T>& Vector<T>::operator = (const Vector& myVector)
 template <class T>
 const T& Vector<T>::operator[](int index) const
 {
-    if (index < 0 || index >= m_count)
+    if (index < 0 || index >= static_cast<int>(m_vector.size()))
     {
         throw out_of_range("Vector index out of bounds: " + to_string(index));
     }
@@ -198,7 +151,7 @@ const T& Vector<T>::operator[](int index) const
 template <class T>
 T& Vector<T>::operator[](int index)
 {
-    if (index < 0 || index >= m_count) {
+    if (index < 0 || index >= static_cast<int>(m_vector.size())) {
         throw out_of_range("Vector index out of bounds: " + to_string(index));
     }
     return m_vector[index];
@@ -207,87 +160,44 @@ T& Vector<T>::operator[](int index)
 template <class T>
 bool Vector<T>::Insert(const T& data, int index)
 {
-    if (index < 0 || index > m_count)
+    if (index < 0 || index > static_cast<int>(m_vector.size()))
     {
         return false;
     }
 
-    if (m_count >= m_capacity/2)
-    {
-        Resize();
-    }
+    m_vector.insert(m_vector.begin() + index, data);
 
-    if (m_count < m_capacity)
-    {
-        for (int i = m_count; i > index; --i)
-        {
-            m_vector[i] = m_vector[i - 1];
-        }
-
-        m_vector[index] = data;
-        m_count++;
-
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return true;
 }
 
 template <class T>
 bool Vector<T>::Delete(int index)
 {
-    if (index < 0 || index >= m_count)
+    if (index < 0 || index >= static_cast<int>(m_vector.size()))
     {
         return false;
     }
 
-    if (m_count == 0)
+    if (m_vector.empty())
     {
         return false;
     }
 
-    for (int i = index; i < m_count - 1; ++i)
-    {
-        m_vector[i] = m_vector[i + 1];
-    }
+    m_vector.erase(m_vector.begin() + index);
 
-    m_count--;
     return true;
 }
 
 template <class T>
 int Vector<T>::getCount() const
 {
-    return m_count;
+    return static_cast<int>(m_vector.size());
 }
 
 template <class T>
 int Vector<T>::getCapacity() const
 {
-    return m_capacity;
-}
-
-template <class T>
-void Vector<T>::Resize()
-{
-    int newCapacity = m_capacity * 2;
-    if (newCapacity < 1)
-    {
-        newCapacity = INITIAL_CAPACITY;
-    }
-
-    T* newVector = new T[newCapacity];
-
-    for (int i = 0; i < m_count; ++i)
-    {
-        newVector[i] = m_vector[i];
-    }
-
-    delete[] m_vector;
-    m_vector = newVector;
-    m_capacity = newCapacity;
+    return static_cast<int>(m_vector.capacity());
 }
 
 #endif // VECTOR_H_INCLUDED

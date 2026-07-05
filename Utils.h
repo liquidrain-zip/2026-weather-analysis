@@ -85,7 +85,7 @@ typedef struct
 } WeatherEntry;
 
 /**
- * @brief Data structure for storing all records.
+ * @brief Data structure for holding weather entries in a Vector
  */
 typedef Vector<WeatherEntry> WeatherData;
 #endif // UTILS_H_INCLUDED

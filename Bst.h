@@ -13,7 +13,7 @@ using std::runtime_error;
  *
  * @author 34528531
  * @version 01
- * @date 4/06/2026 34528531, Initial.
+ * @date 05/07/2026 34528531, Initial.
  */
 template <class T>
 struct Node
