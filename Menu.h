@@ -5,8 +5,8 @@
 #include "Calculate.h"
 
 /**
- * @class Controller
- * @brief Declaration of the Controller class.
+ * @class Menu
+ * @brief Declaration of the Menu class.
  *
  * @author 34528531
  * @version 01
@@ -15,9 +15,13 @@
  * @author 34528531
  * @version 02
  * @date 18/06/2026 34528531, Replaced menu methods and load source from filename.
+ *
+ * @author 34528531
+ * @version 03
+ * @date 5/06/2026 34528531, Rename to Menu class.
  */
 
-class Controller
+class Menu
 {
 public:
     void DisplayMenu();

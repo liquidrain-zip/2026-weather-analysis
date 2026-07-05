@@ -1,12 +1,12 @@
-#include "Controller.h"
+#include "Menu.h"
 
 int main()
 {
     // 0. Data store
-    Controller myController;
+    Menu appMenu;
     WeatherData weatherData;
     const string filename = "data/data_source.txt";
-    int recordsCount = myController.LoadFromSourceFile(weatherData, filename);
+    int recordsCount = appMenu.LoadFromSourceFile(weatherData, filename);
 
     // 1. Input / Load
     if (recordsCount > 0) {
@@ -22,7 +22,7 @@ int main()
     // 2. Menu
     int choice;
     do {
-        myController.DisplayMenu();
+        appMenu.DisplayMenu();
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -33,7 +33,7 @@ int main()
             continue;
         }
 
-        myController.ProcessMenuChoice(choice, weatherData);
+        appMenu.ProcessMenuChoice(choice, weatherData);
 
         cout << endl;
 

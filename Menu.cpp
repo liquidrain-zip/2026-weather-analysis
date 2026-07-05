@@ -1,6 +1,6 @@
-#include "Controller.h"
+#include "Menu.h"
 
-void Controller::DisplayMenu()
+void Menu::DisplayMenu()
 {
     cout << "\nWeather Data\n";
     cout << "-------------------------\n";
@@ -12,7 +12,7 @@ void Controller::DisplayMenu()
     cout << "-------------------------\n";
 }
 
-int Controller::LoadRecords(WeatherData & weatherdata, const string & filename)
+int Menu::LoadRecords(WeatherData & weatherdata, const string & filename)
 {
     int index = 0;
     ifstream inFile(filename);
@@ -148,7 +148,7 @@ int Controller::LoadRecords(WeatherData & weatherdata, const string & filename)
     return index;
 }
 
-int Controller::LoadFromSourceFile(WeatherData & weatherData, const string & filename)
+int Menu::LoadFromSourceFile(WeatherData & weatherData, const string & filename)
 {
     ifstream sourceFile(filename);
     if (!sourceFile.is_open())
@@ -177,7 +177,7 @@ int Controller::LoadFromSourceFile(WeatherData & weatherData, const string & fil
     return totalRecords;
 }
 
-void Controller::ProcessMenuChoice(int choice, const WeatherData& weatherData)
+void Menu::ProcessMenuChoice(int choice, const WeatherData& weatherData)
 {
     int month = -1;
     int year = -1;
@@ -234,7 +234,7 @@ void Controller::ProcessMenuChoice(int choice, const WeatherData& weatherData)
     }
 }
 
-WeatherData Controller::getRecordsForMonthAndYear(int month, int year, const WeatherData& weatherData) const
+WeatherData Menu::getRecordsForMonthAndYear(int month, int year, const WeatherData& weatherData) const
 {
     WeatherData filteredRecords;
     int insertIndex = 0;
@@ -257,7 +257,7 @@ WeatherData Controller::getRecordsForMonthAndYear(int month, int year, const Wea
     return filteredRecords;
 }
 
-void Controller::averageWindSpeedAndStdev(int month, int year, const WeatherData& weatherData) const
+void Menu::averageWindSpeedAndStdev(int month, int year, const WeatherData& weatherData) const
 {
     WeatherData filtered = getRecordsForMonthAndYear(month, year, weatherData);
 
@@ -276,8 +276,7 @@ void Controller::averageWindSpeedAndStdev(int month, int year, const WeatherData
     cout << "Sample stdev: " << fixed << setprecision(1) << stDevSpeed << endl;
 }
 
-// Menu Option 2
-void Controller::monthlyTemperatureAveragesAndStdev(int year, const WeatherData& weatherData) const
+void Menu::monthlyTemperatureAveragesAndStdev(int year, const WeatherData& weatherData) const
 {
     cout << year << endl;
 
@@ -302,7 +301,7 @@ void Controller::monthlyTemperatureAveragesAndStdev(int year, const WeatherData&
     }
 }
 
-void Controller::monthlyTotalSolarRadiation(int year, const WeatherData& weatherData) const
+void Menu::monthlyTotalSolarRadiation(int year, const WeatherData& weatherData) const
 {
     cout << year << endl;
 
@@ -324,7 +323,7 @@ void Controller::monthlyTotalSolarRadiation(int year, const WeatherData& weather
     }
 }
 
-void Controller::outputSummary(int year, const WeatherData& weatherData) const
+void Menu::outputSummary(int year, const WeatherData& weatherData) const
 {
     ofstream outputFile("WindTempSolar.csv");
     if (!outputFile.is_open())
