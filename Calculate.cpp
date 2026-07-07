@@ -42,11 +42,11 @@ double Calculate::StandardDeviation(const WeatherData& weatherData, double avera
 float Calculate::GetValue(const WeatherEntry& weatherEntry, string column)
 {
     if (column == "S") {
-        return weatherEntry.m_windSpeed;
+        return weatherEntry.GetWindSpeed();
     } else if (column == "T") {
-        return weatherEntry.m_temperature;
+        return weatherEntry.GetTemperature();
     } else if (column == "SR") {
-        return weatherEntry.m_solarRadiation;
+        return weatherEntry.GetSolarRadiation();
     }
     return 0.0f;
 }

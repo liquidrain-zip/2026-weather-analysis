@@ -104,29 +104,33 @@ int Menu::LoadRecords(WeatherData & weatherdata, const string & filename)
 
         try
         {
-            // --- Parse Date ---
+            Date tempDate;
             getline(dateTimeStream, tempVal, '/');
-            weatherEntry.m_date.SetDay(stoi(tempVal));
+            tempDate.SetDay(stoi(tempVal));
 
             getline(dateTimeStream, tempVal, '/');
-            weatherEntry.m_date.SetMonth(stoi(tempVal));
+            tempDate.SetMonth(stoi(tempVal));
 
             getline(dateTimeStream, tempVal, ' ');
-            weatherEntry.m_date.SetYear(stoi(tempVal));
+            tempDate.SetYear(stoi(tempVal));
 
-            // --- Parse Time ---
+            weatherEntry.SetDate(tempDate);
+
+            Time tempTime;
             getline(dateTimeStream, tempVal, ':');
-            weatherEntry.m_time.SetHour(stoi(tempVal));
+            tempTime.SetHour(stoi(tempVal));
 
             getline(dateTimeStream, tempVal, ':');
-            weatherEntry.m_time.SetMinute(stoi(tempVal));
+            tempTime.SetMinute(stoi(tempVal));
 
             getline(dateTimeStream, tempVal);
-            weatherEntry.m_time.SetSecond(stoi(tempVal));
+            tempTime.SetSecond(stoi(tempVal));
 
-            weatherEntry.m_windSpeed = stof(windSpeedStr) * 3.6f;
-            weatherEntry.m_temperature = stof(tempStr);
-            weatherEntry.m_solarRadiation = stof(solarRadStr);
+            weatherEntry.SetTime(tempTime);
+
+            weatherEntry.SetWindSpeed(stof(windSpeedStr) * 3.6f);
+            weatherEntry.SetTemperature(stof(tempStr));
+            weatherEntry.SetSolarRadiation(stof(solarRadStr));
         }
         catch (const invalid_argument& e)
         {
@@ -247,7 +251,7 @@ WeatherData Menu::getRecordsForMonthAndYear(int month, int year, const WeatherDa
     for (int i = 0; i < weatherData.getCount(); ++i)
     {
         const WeatherEntry& weatherEntry = weatherData[i];
-        if (weatherEntry.m_date.GetMonth() == month && weatherEntry.m_date.GetYear() == year)
+        if (weatherEntry.GetDate().GetMonth() == month && weatherEntry.GetDate().GetYear() == year)
         {
             filteredRecords.Insert(weatherEntry, insertIndex);
             insertIndex++;

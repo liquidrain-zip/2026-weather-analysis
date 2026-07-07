@@ -4,6 +4,7 @@
 #include "Date.h"
 #include "Time.h"
 #include "Vector.h"
+#include "WeatherEntry.h"
 
 #include <iostream>
 #include <string>
@@ -71,18 +72,6 @@ const string MonthNames[] =
     "", "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 };
-
-/**
- * @brief Structure to hold a single record entry.
- */
-typedef struct
-{
-    Date m_date = Date();
-    Time m_time = Time();
-    float m_windSpeed = 0.0;
-    float m_temperature  = 0.0;
-    float m_solarRadiation  = 0.0;
-} WeatherEntry;
 
 /**
  * @brief Data structure for holding weather entries in a Vector
