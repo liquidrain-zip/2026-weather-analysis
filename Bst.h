@@ -1,10 +1,7 @@
 #ifndef BST_H_INCLUDED
 #define BST_H_INCLUDED
 #include <stdexcept>
-#include <iostream>
 
-using std::cout;
-using std::endl;
 using std::runtime_error;
 
 /**
@@ -14,6 +11,10 @@ using std::runtime_error;
  * @author 34528531
  * @version 01
  * @date 05/07/2026 34528531, Initial.
+ *
+ * @author 34528531
+ * @version 02
+ * @date 07/07/2026 34528531, Updated traversals to use function pointers.
  */
 template <class T>
 struct Node
@@ -32,59 +33,51 @@ class Bst
 public:
     /**
      * @brief Default constructor.
-     * Initializes an empty tree by setting the root pointer to nullptr.
      */
     Bst();
 
     /**
      * @brief Destructor.
-     * Calls DestroyTree() to recursively deallocate all nodes in the tree.
      */
     ~Bst();
 
     /**
      * @brief Copy constructor for deep copying the BST.
-     * @param otherTree The BST object to be copied.
      */
-    Bst(const Bst& otherTree); // copy constructor
+    Bst(const Bst& otherTree);
 
     /**
      * @brief Copy assignment operator for deep copying the BST.
-     * Handles self-assignment and performs a deep copy of the structure.
-     * @param other The BST object on the right-hand side of the assignment.
-     * @return A constant reference to the current object (*this).
      */
-    const Bst& operator=(const Bst&); // copy assignment operator
+    const Bst& operator=(const Bst&);
 
     /**
      * @brief Checks if the tree is empty.
-     * @return true if the root is nullptr, false otherwise.
      */
     bool isEmpty() const;
 
     /**
      * @brief Deallocates all nodes in the tree.
-     * Public wrapper for the private destroy() helper function.
      */
     void DestroyTree();
 
     /**
      * @brief Performs an InOrder traversal of the tree.
-     * Prints the elements in ascending order (Left -> Root -> Right).
+     * @param process A function pointer that dictates what to do with each node's data.
      */
-    void InOrderTraversal();
+    void InOrderTraversal(void (*process)(const T&)) const;
 
     /**
      * @brief Performs a PreOrder traversal of the tree.
-     * Prints the elements in Root -> Left -> Right order.
+     * @param process A function pointer that dictates what to do with each node's data.
      */
-    void PreOrderTraversal();
+    void PreOrderTraversal(void (*process)(const T&)) const;
 
     /**
      * @brief Performs a PostOrder traversal of the tree.
-     * Prints the elements in Left -> Right -> Root order.
+     * @param process A function pointer that dictates what to do with each node's data.
      */
-    void PostOrderTraversal();
+    void PostOrderTraversal(void (*process)(const T&)) const;
 
     /**
      * @brief Inserts a new element into the BST while maintaining the search tree property.
@@ -94,57 +87,29 @@ public:
 
     /**
      * @brief Searches for a specific element in the tree.
-     * @param data The element to search for.
-     * @return true if the element is found, false otherwise.
      */
-    bool Search(const T& data);
+    bool Search(const T& data) const;
 
     /**
      * @brief Deletes a node containing the specified target data.
-     * Handles nodes with zero, one, or two children.
-     * @param deleteTarget The value of the node to be deleted.
      */
     void DeleteNode(const T& deleteTarget);
 
 private:
-    /// @brief Pointer to the root node of the BST.
     Node<T> *m_root;
 
-    /// @brief Recursive helper function to perform a deep copy of the tree structure.
     void copyTree(Node<T>* &copiedTreeRoot, Node<T>* otherTreeRoot);
-
-    /// @brief Recursive helper function to deallocate all nodes in the tree (post-order traversal).
     void destroy(Node<T>* &p);
 
-    /// @brief Recursive helper function for InOrder traversal.
-    void inorder(Node<T> *p) const;
+    void inorder(Node<T> *p, void (*process)(const T&)) const;
+    void preorder(Node<T> *p, void (*process)(const T&)) const;
+    void postorder(Node<T> *p, void (*process)(const T&)) const;
 
-    /// @brief Recursive helper function for PreOrder traversal.
-    void preorder(Node<T> *p) const;
-
-    /// @brief Recursive helper function for PostOrder traversal.
-    void postorder(Node<T> *p) const;
-
-    /// @brief Recursive helper function for inserting a node.
     void insert(Node<T>* &p, const T& data);
-
-    /// @brief Recursive helper function for searching for data.
     bool search(Node<T> *p, const T& data) const;
-
-    /// @brief Recursive helper function for deleting a node.
     void deleteNode(Node<T>* &p, const T& deleteTarget);
-
-    /**
-     * @brief Finds the minimum value in a given subtree.
-     * Used by deleteNode to find the inorder successor (smallest element in the right subtree).
-     * @param p The root of the subtree to search.
-     * @return The minimum value found.
-     * @throw std::runtime_error if called on a nullptr.
-     */
     T getMin(Node<T>* p) const;
 };
-
-
 
 template <class T>
 Bst<T>::Bst()
@@ -158,14 +123,12 @@ Bst<T>::~Bst()
     DestroyTree();
 }
 
-// Copy Constructor
 template <class T>
 Bst<T>::Bst(const Bst& otherTree):m_root(nullptr)
 {
     copyTree(m_root, otherTree.m_root);
 }
 
-// Copy Assignment Operator
 template <class T>
 const Bst<T>& Bst<T>::operator=(const Bst<T>& other)
 {
@@ -189,7 +152,6 @@ void Bst<T>::DestroyTree()
     destroy(m_root);
 }
 
-// Private Recursive Helper to destroy the tree
 template <class T>
 void Bst<T>::destroy(Node<T>* &p)
 {
@@ -202,9 +164,6 @@ void Bst<T>::destroy(Node<T>* &p)
     }
 }
 
-// --- Copy Operations (Rule of Three) ---
-
-// Private Recursive Helper to perform deep copy
 template <class T>
 void Bst<T>::copyTree(Node<T>* &copiedTreeRoot, Node<T>* otherTreeRoot)
 {
@@ -249,7 +208,7 @@ void Bst<T>::insert(Node<T>* &p, const T& data)
 }
 
 template <class T>
-bool Bst<T>::Search(const T& data)
+bool Bst<T>::Search(const T& data) const
 {
     return search(m_root, data);
 }
@@ -276,56 +235,53 @@ bool Bst<T>::search(Node<T> *p, const T& data) const
 }
 
 template <class T>
-void Bst<T>::InOrderTraversal()
+void Bst<T>::InOrderTraversal(void (*process)(const T&)) const
 {
-    inorder(m_root);
-    cout << endl;
+    inorder(m_root, process);
 }
 
 template <class T>
-void Bst<T>::inorder(Node<T> *p) const
+void Bst<T>::inorder(Node<T> *p, void (*process)(const T&)) const
 {
     if (p != nullptr)
     {
-        inorder(p->m_left);
-        cout << p->m_info << " ";
-        inorder(p->m_right);
+        inorder(p->m_left, process);
+        process(p->m_info);
+        inorder(p->m_right, process);
     }
 }
 
 template <class T>
-void Bst<T>::PreOrderTraversal()
+void Bst<T>::PreOrderTraversal(void (*process)(const T&)) const
 {
-    preorder(m_root);
-    cout << endl;
+    preorder(m_root, process);
 }
 
 template <class T>
-void Bst<T>::preorder(Node<T> *p) const
+void Bst<T>::preorder(Node<T> *p, void (*process)(const T&)) const
 {
     if (p != nullptr)
     {
-        cout << p->m_info << " ";
-        preorder(p->m_left);
-        preorder(p->m_right);
+        process(p->m_info);
+        preorder(p->m_left, process);
+        preorder(p->m_right, process);
     }
 }
 
 template <class T>
-void Bst<T>::PostOrderTraversal()
+void Bst<T>::PostOrderTraversal(void (*process)(const T&)) const
 {
-    postorder(m_root);
-    cout << endl;
+    postorder(m_root, process);
 }
 
 template <class T>
-void Bst<T>::postorder(Node<T> *p) const
+void Bst<T>::postorder(Node<T> *p, void (*process)(const T&)) const
 {
     if (p != nullptr)
     {
-        postorder(p->m_left);
-        postorder(p->m_right);
-        cout << p->m_info << " ";
+        postorder(p->m_left, process);
+        postorder(p->m_right, process);
+        process(p->m_info);
     }
 }
 
