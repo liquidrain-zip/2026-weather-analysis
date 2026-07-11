@@ -1,8 +1,11 @@
 #ifndef BST_H_INCLUDED
 #define BST_H_INCLUDED
 #include <stdexcept>
+#include <iostream>
 
 using std::runtime_error;
+using std::cout;
+using std::endl;
 
 /**
  * @brief Represents a node in the Binary Search Tree.
@@ -15,7 +18,11 @@ using std::runtime_error;
  * @author 34528531
  * @version 02
  * @date 07/07/2026 34528531, Updated traversals to use function pointers.
- */
+ *
+ * @author 34528531
+ * @version 03
+ * @date 11/07/2026 34528531, Updated insert methods to return boolean type.
+ **/
 template <class T>
 struct Node
 {
@@ -83,7 +90,7 @@ public:
      * @brief Inserts a new element into the BST while maintaining the search tree property.
      * @param data The element to be inserted.
      */
-    void Insert(const T & data);
+    bool Insert(const T & data);
 
     /**
      * @brief Searches for a specific element in the tree.
@@ -105,7 +112,7 @@ private:
     void preorder(Node<T> *p, void (*process)(const T&)) const;
     void postorder(Node<T> *p, void (*process)(const T&)) const;
 
-    void insert(Node<T>* &p, const T& data);
+    bool insert(Node<T>* &p, const T& data);
     bool search(Node<T> *p, const T& data) const;
     void deleteNode(Node<T>* &p, const T& deleteTarget);
     T getMin(Node<T>* p) const;
@@ -182,13 +189,13 @@ void Bst<T>::copyTree(Node<T>* &copiedTreeRoot, Node<T>* otherTreeRoot)
 }
 
 template <class T>
-void Bst<T>::Insert(const T& data)
+bool Bst<T>::Insert(const T& data)
 {
-    insert(m_root, data);
+    return insert(m_root, data);
 }
 
 template <class T>
-void Bst<T>::insert(Node<T>* &p, const T& data)
+bool Bst<T>::insert(Node<T>* &p, const T& data)
 {
     if (p == nullptr)
     {
@@ -196,6 +203,7 @@ void Bst<T>::insert(Node<T>* &p, const T& data)
         p->m_info = data;
         p->m_left = nullptr;
         p->m_right = nullptr;
+        return true;
     }
     else if (data < p->m_info)
     {
@@ -204,6 +212,11 @@ void Bst<T>::insert(Node<T>* &p, const T& data)
     else if (data > p->m_info)
     {
         insert(p->m_right, data);
+    }
+    else
+    {
+        cout << "Duplicate value detected. Insertion failed." << endl;
+        return false;
     }
 }
 
