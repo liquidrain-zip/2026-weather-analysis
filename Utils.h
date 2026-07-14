@@ -5,6 +5,7 @@
 #include "Time.h"
 #include "Vector.h"
 #include "WeatherEntry.h"
+#include "Bst.h"
 
 #include <iostream>
 #include <string>
@@ -12,6 +13,7 @@
 #include <fstream>
 #include <cmath>
 #include <iomanip>
+#include <map>
 
 /**
  * @class Utils
@@ -48,6 +50,7 @@ using std::stol;
 using std::stof;
 using std::invalid_argument;
 using std::out_of_range;
+using std::abs;
 
 /**
  * @brief Character constant used to split fields within CSV input data streams.
@@ -77,4 +80,59 @@ const string MonthNames[] =
  * @brief Data structure for holding weather entries in a Vector
  */
 typedef Vector<WeatherEntry> WeatherData;
+
+/**
+ * @struct DayMap
+ * @brief Stores the data for the day.
+ */
+using DayMap = map<int, WeatherData>;
+
+/**
+ * @struct MonthData
+ * @brief Stores all data for a single month, held within a YearData's BST.
+ */
+struct MonthData
+{
+    MonthData() : month(0), dayData() {}
+
+    int month = 0;
+    DayMap dayData;
+
+    bool operator<(const MonthData& other) const
+    {
+        return month < other.month;
+    }
+    bool operator>(const MonthData& other) const
+    {
+        return month > other.month;
+    }
+    bool operator==(const MonthData& other) const
+    {
+        return month == other.month;
+    }
+};
+
+/**
+ * @struct YearData
+ */
+struct YearData
+{
+    YearData() : year(0), monthTree() {}
+
+    int year = 0;
+    Bst<MonthData> monthTree;
+
+    bool operator<(const YearData& other) const
+    {
+        return year < other.year;
+    }
+    bool operator>(const YearData& other) const
+    {
+        return year > other.year;
+    }
+    bool operator==(const YearData& other) const
+    {
+        return year == other.year;
+    }
+};
 #endif // UTILS_H_INCLUDED

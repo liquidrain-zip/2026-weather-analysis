@@ -18,7 +18,11 @@
  *
  * @author 34528531
  * @version 03
- * @date 5/06/2026 34528531, Rename to Menu class.
+ * @date 05/07/2026 34528531, Rename to Menu class.
+ *
+ * @author 34528531
+ * @version 04
+ * @date 12/07/2026 34528531, Option 3 replaced with displaySPCC.
  */
 
 class Menu
@@ -33,7 +37,7 @@ private:
     WeatherData getRecordsForMonthAndYear(int month, int year, const WeatherData& weatherData) const;
     void averageWindSpeedAndStdev(int month, int year, const WeatherData& weatherData) const;
     void monthlyTemperatureAveragesAndStdev(int year, const WeatherData& weatherData) const;
-    void monthlyTotalSolarRadiation(int year, const WeatherData& weatherData) const;
+    void displaySPCC(int month, const WeatherData& weatherData) const;
     void outputSummary(int year, const WeatherData& weatherData) const;
 };
 

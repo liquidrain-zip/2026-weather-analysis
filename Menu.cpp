@@ -6,7 +6,7 @@ void Menu::DisplayMenu()
     cout << "-------------------------\n";
     cout << "1. Average wind speed and sample standard deviation (specific month and year)\n";
     cout << "2. Average ambient air temperature and sample standard deviation (each month of a year)\n";
-    cout << "3. Total solar radiation (each month of a year)\n";
+    cout << "3. Calculate sPCC result for S_T, S_R & T_R (specific month for all years)\n";
     cout << "4. Output monthly summary to file (WindTempSolar.csv)\n";
     cout << "5. Exit\n";
     cout << "-------------------------\n";
@@ -213,13 +213,13 @@ void Menu::ProcessMenuChoice(int choice, const WeatherData& weatherData)
         monthlyTemperatureAveragesAndStdev(year, weatherData);
         break;
     case 3:
-        cout << "Enter the year (e.g., 2025): ";
-        if (!(cin >> year))
+        cout << "Enter the month (1-12): ";
+        if (!(cin >> month) || month < 1 || month > 12)
         {
-            cout << "Invalid year. Returning to menu.\n";
+            cout << "Invalid month. Returning to menu.\n";
             return;
         }
-        monthlyTotalSolarRadiation(year, weatherData);
+        displaySPCC(month, weatherRecords);
         break;
     case 4:
         cout << "Enter the year (e.g., 2025): ";
@@ -305,26 +305,30 @@ void Menu::monthlyTemperatureAveragesAndStdev(int year, const WeatherData& weath
     }
 }
 
-void Menu::monthlyTotalSolarRadiation(int year, const WeatherData& weatherData) const
+void Menu::displaySPCC(int month, const WeatherData& weatherData) const
 {
-    cout << year << endl;
+    SPCC_Collector collector;
+    collector.targetMonth = month;
 
-    for (int month = 1; month <= 12; ++month)
+    WeatherDatabase& nonConstDB = const_cast<WeatherDatabase&>(weatherRecords);
+    nonConstDB.TraverseYears(sPCC_Visit_Func, &collector);
+
+    cout << "\nSample Pearson Correlation Coefficient for " << monthNames[month] << endl;
+
+    if (collector.all_S.getCount() < 2)
     {
-        WeatherData filtered = getRecordsForMonthAndYear(month, year, weatherData);
-
-        cout << MonthNames[month] << ": ";
-
-        if (filtered.getCount() == 0)
-        {
-            cout << "No Data" << endl;
-            continue;
-        }
-
-        double totalSolarRad = Calculate::Total(filtered, "SR") / 1000.0;
-
-        cout << fixed << setprecision(1) << totalSolarRad << " kWh/m2" << endl;
+        cout << "Not enough data to calculate sPCC for " << monthNames[month] << "." << endl;
+        return;
     }
+
+    // Calculate and display results
+    double s_t = Calculate::Spcc(collector.all_S, collector.all_T);
+    double s_r = Calculate::Spcc(collector.all_S, collector.all_R);
+    double t_r = Calculate::Spcc(collector.all_T, collector.all_R);
+
+    cout << "S_T: " << fixed << setprecision(2) << s_t << endl;
+    cout << "S_R: " << fixed << setprecision(2) << s_r << endl;
+    cout << "T_R: " << fixed << setprecision(2) << t_r << endl;
 }
 
 void Menu::outputSummary(int year, const WeatherData& weatherData) const
