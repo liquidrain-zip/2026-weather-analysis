@@ -226,7 +226,7 @@ bool Bst<T>::insert(Node<T>* &p, const T& data)
         cout << "Duplicate value detected. Insertion failed." << endl;
         return false;
     }
-    return false; // Safety fallback to silence compiler warnings [-Wreturn-type]
+    return false;
 }
 
 template <typename T>
