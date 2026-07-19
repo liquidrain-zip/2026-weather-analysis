@@ -1,43 +1,49 @@
 #include "Menu.h"
+#include "DataDB.h"
 
 int main()
 {
     // 0. Data store
-    Menu appMenu;
-    WeatherData weatherData;
+    Menu menu;
+    DataDB dataDB;
     const string filename = "data/data_source.txt";
-    int recordsCount = appMenu.LoadFromSourceFile(weatherData, filename);
 
     // 1. Input / Load
-    if (recordsCount > 0) {
-        cout << "Successfully loaded " << weatherData.getCount() << " records!" << endl;
+    int recordsCount = menu.LoadFromSourceFile(dataDB, filename);
+
+    if (recordsCount > 0)
+    {
+        cout << "Successfully loaded " << recordsCount << " weather records." << endl;
     }
     else
     {
-        cout << "Error loading records. Program terminating." << endl;
+        cerr << "Error loading records. Program terminating." << endl;
         return 1;
     }
 
 
     // 2. Menu
     int choice;
-    do {
-        appMenu.DisplayMenu();
+    do
+    {
+        menu.DisplayMenu();
         cout << "Enter your choice: ";
         cin >> choice;
 
-        if (cin.fail()) {
-            cout << "Invalid input. Please choose from the menu.\n";
+        if (cin.fail())
+        {
+            cout << "Invalid input. Please enter a number from the menu.\n";
             cin.clear();
-            choice = 0;
+            choice = 0; // returns to menu display
             continue;
         }
 
-        appMenu.ProcessMenuChoice(choice, weatherData);
+        menu.ProcessMenuChoice(choice, dataDB);
 
         cout << endl;
 
-    } while (choice != 5);
+    }
+    while (choice != 5);
 
     return 0;
 }

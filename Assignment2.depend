@@ -1,21 +1,23 @@
 # depslib dependency file v1.0
-1783423157 source:c:\users\user\my drive\school\ict283\assignment2\calculate.cpp
+1784025587 source:c:\users\user\my drive\school\ict283\assignment2\calculate.cpp
 	"Calculate.h"
 
-1781951442 c:\users\user\my drive\school\ict283\assignment2\calculate.h
+1784024967 c:\users\user\my drive\school\ict283\assignment2\calculate.h
 	"Utils.h"
 
-1783423068 c:\users\user\my drive\school\ict283\assignment2\utils.h
+1784447066 c:\users\user\my drive\school\ict283\assignment2\utils.h
 	"Date.h"
 	"Time.h"
 	"Vector.h"
 	"WeatherEntry.h"
+	"Bst.h"
 	<iostream>
 	<string>
 	<sstream>
 	<fstream>
 	<cmath>
 	<iomanip>
+	<map>
 
 1781601889 c:\users\user\my drive\school\ict283\assignment2\date.h
 	<iostream>
@@ -71,4 +73,8 @@
 
 1782638648 source:c:\users\user\my drive\school\ict283\assignment2\weatherentry.cpp
 	"WeatherEntry.h"
+
+1783733406 c:\users\user\my drive\school\ict283\assignment2\bst.h
+	<stdexcept>
+	<iostream>
 

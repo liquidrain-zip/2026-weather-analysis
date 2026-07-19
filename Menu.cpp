@@ -219,7 +219,7 @@ void Menu::ProcessMenuChoice(int choice, const WeatherData& weatherData)
             cout << "Invalid month. Returning to menu.\n";
             return;
         }
-        displaySPCC(month, weatherRecords);
+        displaySPCC(month, weatherData);
         break;
     case 4:
         cout << "Enter the year (e.g., 2025): ";
@@ -307,24 +307,34 @@ void Menu::monthlyTemperatureAveragesAndStdev(int year, const WeatherData& weath
 
 void Menu::displaySPCC(int month, const WeatherData& weatherData) const
 {
-    SPCC_Collector collector;
-    collector.targetMonth = month;
+    Vector<float> all_S;
+    Vector<float> all_T;
+    Vector<float> all_R;
 
-    WeatherDatabase& nonConstDB = const_cast<WeatherDatabase&>(weatherRecords);
-    nonConstDB.TraverseYears(sPCC_Visit_Func, &collector);
-
-    cout << "\nSample Pearson Correlation Coefficient for " << monthNames[month] << endl;
-
-    if (collector.all_S.getCount() < 2)
+    // Iterate through all records and collect values matching the target month across ALL years
+    for (int i = 0; i < weatherData.getCount(); ++i)
     {
-        cout << "Not enough data to calculate sPCC for " << monthNames[month] << "." << endl;
+        const WeatherEntry& entry = weatherData[i];
+        if (entry.GetDate().GetMonth() == month)
+        {
+            all_S.Insert(entry.GetWindSpeed(), all_S.getCount());
+            all_T.Insert(entry.GetTemperature(), all_T.getCount());
+            all_R.Insert(entry.GetSolarRadiation(), all_R.getCount());
+        }
+    }
+
+    cout << "\nSample Pearson Correlation Coefficient for " << MonthNames[month] << endl;
+
+    if (all_S.getCount() < 2)
+    {
+        cout << "Not enough data to calculate sPCC for " << MonthNames[month] << "." << endl;
         return;
     }
 
-    // Calculate and display results
-    double s_t = Calculate::Spcc(collector.all_S, collector.all_T);
-    double s_r = Calculate::Spcc(collector.all_S, collector.all_R);
-    double t_r = Calculate::Spcc(collector.all_T, collector.all_R);
+    // Calculate and display results using your new Calculate class
+    double s_t = Calculate::Spcc(all_S, all_T);
+    double s_r = Calculate::Spcc(all_S, all_R);
+    double t_r = Calculate::Spcc(all_T, all_R);
 
     cout << "S_T: " << fixed << setprecision(2) << s_t << endl;
     cout << "S_R: " << fixed << setprecision(2) << s_r << endl;
@@ -378,4 +388,5 @@ void Menu::outputSummary(int year, const WeatherData& weatherData) const
     }
 
     outputFile.close();
+}
 }

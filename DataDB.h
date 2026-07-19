@@ -6,8 +6,6 @@
 /**
  * @class DataDB
  * @brief Encapsulates the Year->Month->Day nested data structure.
- *
- * This class provides efficient insertion and query methods for the menu options.
  */
 class DataDB
 {

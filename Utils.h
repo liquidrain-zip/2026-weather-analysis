@@ -135,4 +135,7 @@ struct YearData
         return year == other.year;
     }
 };
+
+template <typename T>
+using visit_t = void (*)(T&, void*);
 #endif // UTILS_H_INCLUDED
