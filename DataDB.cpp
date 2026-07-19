@@ -60,5 +60,5 @@ const DayMap* DataDB::GetMonthData(int y, int m) const
 
 void DataDB::TraverseYears(visit_t<YearData> visit_func, void* userData)
 {
-    m_yearTree.InOrder(visit_func, userData);
+    m_yearTree.InOrderTraversal(visit_func, userData);
 }

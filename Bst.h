@@ -22,6 +22,10 @@ using std::endl;
  * @author 34528531
  * @version 03
  * @date 11/07/2026 34528531, Updated insert methods to return boolean type.
+ *
+ * @author 34528531
+ * @version 04
+ * @date 19/07/2026 34528531, Updated all traversals to use context pointer signatures.
  **/
 template <class T>
 struct Node
@@ -69,22 +73,25 @@ public:
     void DestroyTree();
 
     /**
-     * @brief Performs an InOrder traversal of the tree.
-     * @param process A function pointer that dictates what to do with each node's data.
+     * @brief Performs an InOrder traversal of the tree with a context pointer.
+     * @param process A function pointer that processes each node's data and accepts user context.
+     * @param userData A void pointer to user-defined context or collector structures.
      */
-    void InOrderTraversal(void (*process)(const T&)) const;
+    void InOrderTraversal(void (*process)(T&, void*), void* userData);
 
     /**
-     * @brief Performs a PreOrder traversal of the tree.
-     * @param process A function pointer that dictates what to do with each node's data.
+     * @brief Performs a PreOrder traversal of the tree with a context pointer.
+     * @param process A function pointer that processes each node's data and accepts user context.
+     * @param userData A void pointer to user-defined context or collector structures.
      */
-    void PreOrderTraversal(void (*process)(const T&)) const;
+    void PreOrderTraversal(void (*process)(T&, void*), void* userData);
 
     /**
-     * @brief Performs a PostOrder traversal of the tree.
-     * @param process A function pointer that dictates what to do with each node's data.
+     * @brief Performs a PostOrder traversal of the tree with a context pointer.
+     * @param process A function pointer that processes each node's data and accepts user context.
+     * @param userData A void pointer to user-defined context or collector structures.
      */
-    void PostOrderTraversal(void (*process)(const T&)) const;
+    void PostOrderTraversal(void (*process)(T&, void*), void* userData);
 
     /**
      * @brief Inserts a new element into the BST while maintaining the search tree property.
@@ -109,9 +116,9 @@ private:
     void copyTree(Node<T>* &copiedTreeRoot, Node<T>* otherTreeRoot);
     void destroy(Node<T>* &p);
 
-    void inorder(Node<T> *p, void (*process)(const T&)) const;
-    void preorder(Node<T> *p, void (*process)(const T&)) const;
-    void postorder(Node<T> *p, void (*process)(const T&)) const;
+    void inorder(Node<T> *p, void (*process)(T&, void*), void* userData);
+    void preorder(Node<T> *p, void (*process)(T&, void*), void* userData);
+    void postorder(Node<T> *p, void (*process)(T&, void*), void* userData);
 
     bool insert(Node<T>* &p, const T& data);
     Node<T>* search(Node<T>* p, const T& data) const;
@@ -219,7 +226,7 @@ bool Bst<T>::insert(Node<T>* &p, const T& data)
         cout << "Duplicate value detected. Insertion failed." << endl;
         return false;
     }
-    return false;
+    return false; // Safety fallback to silence compiler warnings [-Wreturn-type]
 }
 
 template <typename T>
@@ -248,53 +255,53 @@ Node<T>* Bst<T>::search(Node<T>* p, const T& data) const {
 }
 
 template <class T>
-void Bst<T>::InOrderTraversal(void (*process)(const T&)) const
+void Bst<T>::InOrderTraversal(void (*process)(T&, void*), void* userData)
 {
-    inorder(m_root, process);
+    inorder(m_root, process, userData);
 }
 
 template <class T>
-void Bst<T>::inorder(Node<T> *p, void (*process)(const T&)) const
+void Bst<T>::inorder(Node<T> *p, void (*process)(T&, void*), void* userData)
 {
     if (p != nullptr)
     {
-        inorder(p->m_left, process);
-        process(p->m_info);
-        inorder(p->m_right, process);
+        inorder(p->m_left, process, userData);
+        process(p->m_info, userData);
+        inorder(p->m_right, process, userData);
     }
 }
 
 template <class T>
-void Bst<T>::PreOrderTraversal(void (*process)(const T&)) const
+void Bst<T>::PreOrderTraversal(void (*process)(T&, void*), void* userData)
 {
-    preorder(m_root, process);
+    preorder(m_root, process, userData);
 }
 
 template <class T>
-void Bst<T>::preorder(Node<T> *p, void (*process)(const T&)) const
+void Bst<T>::preorder(Node<T> *p, void (*process)(T&, void*), void* userData)
 {
     if (p != nullptr)
     {
-        process(p->m_info);
-        preorder(p->m_left, process);
-        preorder(p->m_right, process);
+        process(p->m_info, userData);
+        preorder(p->m_left, process, userData);
+        preorder(p->m_right, process, userData);
     }
 }
 
 template <class T>
-void Bst<T>::PostOrderTraversal(void (*process)(const T&)) const
+void Bst<T>::PostOrderTraversal(void (*process)(T&, void*), void* userData)
 {
-    postorder(m_root, process);
+    postorder(m_root, process, userData);
 }
 
 template <class T>
-void Bst<T>::postorder(Node<T> *p, void (*process)(const T&)) const
+void Bst<T>::postorder(Node<T> *p, void (*process)(T&, void*), void* userData)
 {
     if (p != nullptr)
     {
-        postorder(p->m_left, process);
-        postorder(p->m_right, process);
-        process(p->m_info);
+        postorder(p->m_left, process, userData);
+        postorder(p->m_right, process, userData);
+        process(p->m_info, userData);
     }
 }
 

@@ -1,5 +1,38 @@
 #include "Menu.h"
 
+// Collector and visit callback for option 3 tree traversal
+struct SPCC_Collector
+{
+    int targetMonth;
+    Vector<float> all_S;
+    Vector<float> all_T;
+    Vector<float> all_R;
+};
+
+static void sPCC_Visit_Func(YearData& yearData, void* userData)
+{
+    SPCC_Collector* collector = static_cast<SPCC_Collector*>(userData);
+    MonthData searchMonth;
+    searchMonth.month = collector->targetMonth;
+    MonthData* monthNode = yearData.monthTree.Search(searchMonth);
+
+    if (monthNode != nullptr)
+    {
+        for (DayMap::const_iterator it = monthNode->dayData.begin(); it != monthNode->dayData.end(); ++it)
+        {
+            const WeatherData& dayVector = it->second;
+            for (int i = 0; i < dayVector.getCount(); ++i)
+            {
+                const WeatherEntry& rec = dayVector[i];
+                collector->all_S.Insert(rec.GetWindSpeed(), collector->all_S.getCount());
+                collector->all_T.Insert(rec.GetTemperature(), collector->all_T.getCount());
+                collector->all_R.Insert(rec.GetSolarRadiation(), collector->all_R.getCount());
+            }
+        }
+    }
+}
+
+
 void Menu::DisplayMenu()
 {
     cout << "\nWeather Data\n";
@@ -72,23 +105,10 @@ int Menu::LoadRecords(DataDB & weatherdata, const string & filename)
 
         while (getline(ss, token, CSV_DELIMITER))
         {
-            if (col == dateTimeIndex)
-            {
-                 dateTimeStr = token;
-            }
-            else if (col == windSpeedIndex)
-            {
-                 windSpeedStr = token;
-            }
-            else if (col == tempIndex)
-            {
-                 tempStr = token;
-            }
-            else if (col == solarRadIndex)
-            {
-                 solarRadStr = token;
-            }
-
+            if (col == dateTimeIndex) { dateTimeStr = token; }
+            else if (col == windSpeedIndex) { windSpeedStr = token; }
+            else if (col == tempIndex) { tempStr = token; }
+            else if (col == solarRadIndex) { solarRadStr = token; }
             col++;
         }
 
@@ -98,7 +118,6 @@ int Menu::LoadRecords(DataDB & weatherdata, const string & filename)
         }
 
         WeatherEntry weatherEntry;
-
         stringstream dateTimeStream(dateTimeStr);
         string tempVal;
 
@@ -143,8 +162,7 @@ int Menu::LoadRecords(DataDB & weatherdata, const string & filename)
             continue;
         }
 
-        // Store Record
-        weatherdata.Insert(weatherEntry, index);
+        weatherdata.Insert(weatherEntry);
         index++;
     }
 
@@ -181,7 +199,7 @@ int Menu::LoadFromSourceFile(DataDB & weatherData, const string & filename)
     return totalRecords;
 }
 
-void Menu::ProcessMenuChoice(int choice, const DataDB& weatherData)
+void Menu::ProcessMenuChoice(int choice, DataDB& weatherData)
 {
     int month = -1;
     int year = -1;
@@ -238,7 +256,7 @@ void Menu::ProcessMenuChoice(int choice, const DataDB& weatherData)
     }
 }
 
-WeatherData Menu::getRecordsForMonthAndYear(int month, int year, const WeatherData& weatherData) const
+WeatherData Menu::getRecordsForMonthAndYear(int month, int year, const DataDB& weatherData) const
 {
     WeatherData filteredRecords;
     int insertIndex = 0;
@@ -248,12 +266,18 @@ WeatherData Menu::getRecordsForMonthAndYear(int month, int year, const WeatherDa
         return filteredRecords;
     }
 
-    for (int i = 0; i < weatherData.getCount(); ++i)
+    const DayMap* dayMap = weatherData.GetMonthData(year, month);
+    if (dayMap == nullptr)
     {
-        const WeatherEntry& weatherEntry = weatherData[i];
-        if (weatherEntry.GetDate().GetMonth() == month && weatherEntry.GetDate().GetYear() == year)
+        return filteredRecords;
+    }
+
+    for (DayMap::const_iterator it = dayMap->begin(); it != dayMap->end(); ++it)
+    {
+        const WeatherData& dayVector = it->second;
+        for (int i = 0; i < dayVector.getCount(); ++i)
         {
-            filteredRecords.Insert(weatherEntry, insertIndex);
+            filteredRecords.Insert(dayVector[i], insertIndex);
             insertIndex++;
         }
     }
@@ -261,7 +285,7 @@ WeatherData Menu::getRecordsForMonthAndYear(int month, int year, const WeatherDa
     return filteredRecords;
 }
 
-void Menu::averageWindSpeedAndStdev(int month, int year, const WeatherData& weatherData) const
+void Menu::averageWindSpeedAndStdev(int month, int year, const DataDB& weatherData) const
 {
     WeatherData filtered = getRecordsForMonthAndYear(month, year, weatherData);
 
@@ -280,7 +304,7 @@ void Menu::averageWindSpeedAndStdev(int month, int year, const WeatherData& weat
     cout << "Sample stdev: " << fixed << setprecision(1) << stDevSpeed << endl;
 }
 
-void Menu::monthlyTemperatureAveragesAndStdev(int year, const WeatherData& weatherData) const
+void Menu::monthlyTemperatureAveragesAndStdev(int year, const DataDB& weatherData) const
 {
     cout << year << endl;
 
@@ -305,43 +329,32 @@ void Menu::monthlyTemperatureAveragesAndStdev(int year, const WeatherData& weath
     }
 }
 
-void Menu::displaySPCC(int month, const WeatherData& weatherData) const
+void Menu::displaySPCC(int month, DataDB& weatherData) const
 {
-    Vector<float> all_S;
-    Vector<float> all_T;
-    Vector<float> all_R;
+    SPCC_Collector collector;
+    collector.targetMonth = month;
 
-    // Iterate through all records and collect values matching the target month across ALL years
-    for (int i = 0; i < weatherData.getCount(); ++i)
-    {
-        const WeatherEntry& entry = weatherData[i];
-        if (entry.GetDate().GetMonth() == month)
-        {
-            all_S.Insert(entry.GetWindSpeed(), all_S.getCount());
-            all_T.Insert(entry.GetTemperature(), all_T.getCount());
-            all_R.Insert(entry.GetSolarRadiation(), all_R.getCount());
-        }
-    }
+    // Execute tree traversal across all years
+    weatherData.TraverseYears(sPCC_Visit_Func, &collector);
 
     cout << "\nSample Pearson Correlation Coefficient for " << MonthNames[month] << endl;
 
-    if (all_S.getCount() < 2)
+    if (collector.all_S.getCount() < 2)
     {
         cout << "Not enough data to calculate sPCC for " << MonthNames[month] << "." << endl;
         return;
     }
 
-    // Calculate and display results using your new Calculate class
-    double s_t = Calculate::Spcc(all_S, all_T);
-    double s_r = Calculate::Spcc(all_S, all_R);
-    double t_r = Calculate::Spcc(all_T, all_R);
+    double s_t = Calculate::Spcc(collector.all_S, collector.all_T);
+    double s_r = Calculate::Spcc(collector.all_S, collector.all_R);
+    double t_r = Calculate::Spcc(collector.all_T, collector.all_R);
 
     cout << "S_T: " << fixed << setprecision(2) << s_t << endl;
     cout << "S_R: " << fixed << setprecision(2) << s_r << endl;
     cout << "T_R: " << fixed << setprecision(2) << t_r << endl;
 }
 
-void Menu::outputSummary(int year, const WeatherData& weatherData) const
+void Menu::outputSummary(int year, const DataDB& weatherData) const
 {
     ofstream outputFile("WindTempSolar.csv");
     if (!outputFile.is_open())
@@ -360,7 +373,7 @@ void Menu::outputSummary(int year, const WeatherData& weatherData) const
 
         if (count == 0)
         {
-            continue; // Skip month if no data
+            continue;
         }
 
         hasAnyMonthlyData = true;
@@ -369,7 +382,7 @@ void Menu::outputSummary(int year, const WeatherData& weatherData) const
         double stDevSpeed = Calculate::StandardDeviation(filtered, avgSpeed, "S");
         double avgTemp = Calculate::Average(filtered, "T");
         double stDevTemp = Calculate::StandardDeviation(filtered, avgTemp, "T");
-        double totalSolarRad = Calculate::Total(filtered, "SR") / 1000.0; // kWh/m2
+        double totalSolarRad = Calculate::Total(filtered, "SR") / 1000.0;
 
         outputFile << MonthNames[month] << ",";
         outputFile << fixed << setprecision(1) << avgSpeed << "(" << fixed << setprecision(1) << stDevSpeed << "),";
@@ -388,5 +401,4 @@ void Menu::outputSummary(int year, const WeatherData& weatherData) const
     }
 
     outputFile.close();
-}
-}
+} // FIXED: Removed trailing extra closing brace

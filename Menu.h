@@ -1,8 +1,9 @@
-#ifndef CONTROLLER_H_INCLUDED
-#define CONTROLLER_H_INCLUDED
+#ifndef MENU_H_INCLUDED
+#define MENU_H_INCLUDED
 
 #include "Utils.h"
 #include "Calculate.h"
+#include "DataDB.h"
 
 /**
  * @class Menu
@@ -31,14 +32,14 @@ public:
     void DisplayMenu();
     int LoadRecords(DataDB & weatherData, const string & filename);
     int LoadFromSourceFile(DataDB& weatherData, const string& filename);
-    void ProcessMenuChoice(int choice, const DataDB& weatherData);
+    void ProcessMenuChoice(int choice, DataDB& weatherData);
 
 private:
-    WeatherData getRecordsForMonthAndYear(int month, int year, const WeatherData& weatherData) const;
-    void averageWindSpeedAndStdev(int month, int year, const WeatherData& weatherData) const;
-    void monthlyTemperatureAveragesAndStdev(int year, const WeatherData& weatherData) const;
-    void displaySPCC(int month, const WeatherData& weatherData) const;
-    void outputSummary(int year, const WeatherData& weatherData) const;
+    WeatherData getRecordsForMonthAndYear(int month, int year, const DataDB& weatherData) const;
+    void averageWindSpeedAndStdev(int month, int year, const DataDB& weatherData) const;
+    void monthlyTemperatureAveragesAndStdev(int year, const DataDB& weatherData) const;
+    void displaySPCC(int month, DataDB& weatherData) const;
+    void outputSummary(int year, const DataDB& weatherData) const;
 };
 
-#endif // CONTROLLER_H_INCLUDED
+#endif // MENU_H_INCLUDED
