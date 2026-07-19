@@ -12,7 +12,7 @@ void Menu::DisplayMenu()
     cout << "-------------------------\n";
 }
 
-int Menu::LoadRecords(WeatherData & weatherdata, const string & filename)
+int Menu::LoadRecords(DataDB & weatherdata, const string & filename)
 {
     int index = 0;
     ifstream inFile(filename);
@@ -152,7 +152,7 @@ int Menu::LoadRecords(WeatherData & weatherdata, const string & filename)
     return index;
 }
 
-int Menu::LoadFromSourceFile(WeatherData & weatherData, const string & filename)
+int Menu::LoadFromSourceFile(DataDB & weatherData, const string & filename)
 {
     ifstream sourceFile(filename);
     if (!sourceFile.is_open())
@@ -181,7 +181,7 @@ int Menu::LoadFromSourceFile(WeatherData & weatherData, const string & filename)
     return totalRecords;
 }
 
-void Menu::ProcessMenuChoice(int choice, const WeatherData& weatherData)
+void Menu::ProcessMenuChoice(int choice, const DataDB& weatherData)
 {
     int month = -1;
     int year = -1;

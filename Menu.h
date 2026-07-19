@@ -29,9 +29,9 @@ class Menu
 {
 public:
     void DisplayMenu();
-    int LoadRecords(WeatherData & weatherData, const string & filename);
-    int LoadFromSourceFile(WeatherData& weatherData, const string& filename);
-    void ProcessMenuChoice(int choice, const WeatherData& weatherData);
+    int LoadRecords(DataDB & weatherData, const string & filename);
+    int LoadFromSourceFile(DataDB& weatherData, const string& filename);
+    void ProcessMenuChoice(int choice, const DataDB& weatherData);
 
 private:
     WeatherData getRecordsForMonthAndYear(int month, int year, const WeatherData& weatherData) const;

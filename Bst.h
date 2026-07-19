@@ -95,7 +95,8 @@ public:
     /**
      * @brief Searches for a specific element in the tree.
      */
-    bool Search(const T& data) const;
+    T* Search(const T& data);
+    const T* Search(const T& data) const;
 
     /**
      * @brief Deletes a node containing the specified target data.
@@ -113,7 +114,7 @@ private:
     void postorder(Node<T> *p, void (*process)(const T&)) const;
 
     bool insert(Node<T>* &p, const T& data);
-    bool search(Node<T> *p, const T& data) const;
+    Node<T>* search(Node<T>* p, const T& data) const;
     void deleteNode(Node<T>* &p, const T& deleteTarget);
     T getMin(Node<T>* p) const;
 };
@@ -207,42 +208,41 @@ bool Bst<T>::insert(Node<T>* &p, const T& data)
     }
     else if (data < p->m_info)
     {
-        insert(p->m_left, data);
+        return insert(p->m_left, data);
     }
     else if (data > p->m_info)
     {
-        insert(p->m_right, data);
+        return insert(p->m_right, data);
     }
     else
     {
         cout << "Duplicate value detected. Insertion failed." << endl;
         return false;
     }
+    return false;
 }
 
-template <class T>
-bool Bst<T>::Search(const T& data) const
-{
-    return search(m_root, data);
+template <typename T>
+T* Bst<T>::Search(const T& data) {
+    Node<T>* result = search(m_root, data);
+    return (result != nullptr) ? &(result->m_info) : nullptr;
 }
 
-template <class T>
-bool Bst<T>::search(Node<T> *p, const T& data) const
-{
-    if (p == nullptr)
-    {
-        return false;
-    }
-    else if (data == p->m_info)
-    {
-        return true;
-    }
-    else if (data < p->m_info)
-    {
+template <typename T>
+const T* Bst<T>::Search(const T& data) const {
+    Node<T>* result = search(m_root, data);
+    return (result != nullptr) ? &(result->m_info) : nullptr;
+}
+
+template <typename T>
+Node<T>* Bst<T>::search(Node<T>* p, const T& data) const {
+    if (p == nullptr) {
+        return nullptr;
+    } else if (data == p->m_info) {
+        return p;
+    } else if (data < p->m_info) {
         return search(p->m_left, data);
-    }
-    else
-    {
+    } else {
         return search(p->m_right, data);
     }
 }
@@ -336,7 +336,6 @@ void Bst<T>::deleteNode(Node<T>* &p, const T& deleteTarget)
     else // Found the node to delete
     {
         Node<T> *temp = p;
-
         if (p->m_left == nullptr)
         {
             p = p->m_right;

@@ -85,7 +85,7 @@ typedef Vector<WeatherEntry> WeatherData;
  * @struct DayMap
  * @brief Stores the data for the day.
  */
-using DayMap = map<int, WeatherData>;
+typedef DayMap = map<int, WeatherData>;
 
 /**
  * @struct MonthData
