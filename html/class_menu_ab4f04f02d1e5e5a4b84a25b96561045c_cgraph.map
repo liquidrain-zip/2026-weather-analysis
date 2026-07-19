@@ -1,0 +1,15 @@
+<map id="Menu::averageWindSpeedAndStdev" name="Menu::averageWindSpeedAndStdev">
+<area shape="rect" id="node1" title=" " alt="" coords="5,150,201,191"/>
+<area shape="rect" id="node2" href="$class_calculate.html#a439ef597e328ec6267c0a4367ecafd1f" title=" " alt="" coords="275,132,406,159"/>
+<area shape="rect" id="node3" href="$class_vector.html#a75165d58190702b6e1131dc61c1e3a45" title="Gets the count value tracking utilized index data records." alt="" coords="725,132,845,159"/>
+<area shape="rect" id="node9" href="$class_menu.html#ae379aa785f661d86fa7ffcf664d1d49b" title=" " alt="" coords="249,255,432,297"/>
+<area shape="rect" id="node13" href="$class_calculate.html#a6bc943c5be07945b02b2a40404266925" title=" " alt="" coords="480,31,668,57"/>
+<area shape="rect" id="node4" href="$class_calculate.html#ab534c14092fc2972e9d1c86fe1380aff" title=" " alt="" coords="518,81,630,108"/>
+<area shape="rect" id="node5" href="$class_calculate.html#a18cabc3d4a6d353e5745977d87d72461" title=" " alt="" coords="716,56,855,83"/>
+<area shape="rect" id="node6" href="$class_weather_entry.html#a0f8dcc61cc2abfa9b953c97ecd6a8347" title=" " alt="" coords="903,5,1117,32"/>
+<area shape="rect" id="node7" href="$class_weather_entry.html#a74cfaacec008849d3557652f26e523db" title=" " alt="" coords="909,56,1111,83"/>
+<area shape="rect" id="node8" href="$class_weather_entry.html#adf9a661388598425b3904f89355eadb7" title=" " alt="" coords="911,107,1109,133"/>
+<area shape="rect" id="node10" href="$class_data_d_b.html#ab051c795afed8096291441cdf97ad1b2" title="Retrieves the map of day&#45;data for a specific month and year." alt="" coords="495,335,653,361"/>
+<area shape="rect" id="node12" href="$class_vector.html#a554169987168b63ae4e87f5de0c13561" title="Inserts an element item target into a specific array position." alt="" coords="524,233,624,260"/>
+<area shape="rect" id="node11" href="$class_bst.html#a4334e50ea5cfbc123c51fcba868e2de4" title="Searches for a specific element in the tree." alt="" coords="740,335,831,361"/>
+</map>

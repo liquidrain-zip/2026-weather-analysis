@@ -1,0 +1,5 @@
+<map id="WeatherEntry" name="WeatherEntry">
+<area shape="rect" id="node1" title="Encapsulates weather data for a specific date and time." alt="" coords="48,277,195,560"/>
+<area shape="rect" id="node2" href="$class_time.html" title="Represents a time of day with hour, minute, and second." alt="" coords="5,5,112,215"/>
+<area shape="rect" id="node3" href="$class_date.html" title="Holds calendar dates consisting of integers for day, month, and year." alt="" coords="136,5,235,215"/>
+</map>

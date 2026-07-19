@@ -1,0 +1,4 @@
+<map id="DateFormatter::ToLocale" name="DateFormatter::ToLocale">
+<area shape="rect" id="node1" title="Formats a Date object into a readable locale string (e.g., &quot;16 February 2000&quot;)." alt="" coords="139,5,304,32"/>
+<area shape="rect" id="node2" href="$_date_8h.html#ab216d4c896cee47f436985a40482e9ce" title="Overloaded global stream insertion operator to output formatted Date data using Utils." alt="" coords="5,5,91,32"/>
+</map>

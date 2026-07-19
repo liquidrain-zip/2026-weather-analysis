@@ -1,0 +1,101 @@
+================================================================================
+EXECUTIVE SUMMARY: WEATHER DATA ANALYSIS APPLICATION (EVALUATION.TXT)
+================================================================================
+DECLARATION OF MALWARE CHECK:
+I declare that this entire software submission, including all source code, 
+data files, and executable binaries, has been comprehensively scanned for 
+malware using updated antivirus software and is confirmed clean and safe.
+================================================================================
+
+1. WHAT WORKS AND FUNCTIONAL VERIFICATION
+--------------------------------------------------------------------------------
+* Data Ingestion & I/O Handling:
+  - Successfully parses multiple historical weather CSV files listed within 
+    data/data_source.txt without data loss or memory leaks.
+  - Implements multi-layered defensive exception handling (try-catch blocks 
+    for std::invalid_argument and std::out_of_range) during string-to-float 
+    and string-to-int parsing. Malformed CSV records are cleanly skipped 
+    without halting program execution.
+  - Correctly performs unit conversions during file ingestion (converting raw 
+    wind speed from m/s to km/h by multiplying by 3.6).
+
+* Data Storage (DataDB):
+  - Fully implements the mandated hybrid nested structure: 
+    Bst<YearData> -> Bst<MonthData> -> DayMap (std::map) -> Vector<WeatherEntry>.
+  - Chronological sorting is preserved automatically at all tiers via custom 
+    overloaded relational operators (<, >, ==) on domain entities (Date, Time).
+
+* Interactive MVC Console UI (Menu & Controller):
+  - Model-View-Controller architecture completely separates user I/O from 
+    data persistence and statistical calculations.
+  - Option 1 (Wind Speed Stats): Accurately queries specific month/year 
+    records and outputs sample average and sample standard deviation.
+  - Option 2 (Temperature Averages): Correctly iterates across all 12 months 
+    of a user-specified year, outputting averages and sample standard 
+    deviations, while cleanly printing "No Data" for unrecorded months.
+  - Option 3 (sPCC Cross-Sectional Analysis): Successfully calculates the 
+    sample Pearson Correlation Coefficient for S_T, S_R, and T_R across all 
+    loaded years for a user-specified target month.
+  - Option 4 (CSV Summary Export): Correctly generates "WindTempSolar.csv", 
+    formatting average wind speed, ambient temperature, Mean Absolute Deviation 
+    (stdev, mad), and total solar radiation (converting Wh/m2 to kWh/m2 by 
+    dividing by 1000.0). Fully adheres to strict output rules (omitting empty 
+    months and writing "No Data" for empty years).
+
+* Statistical Computational Engine (Calculate):
+  - The static utility class successfully executes algorithms for Total, 
+    Average, Standard Deviation, MAD, and sPCC independently of the storage 
+    data types, utilizing generic string column selectors ("S", "T", "SR").
+
+
+2. WHAT DOES NOT WORK / KNOWN TECHNICAL LIMITATIONS
+--------------------------------------------------------------------------------
+* Degraded BST Search Speeds on Sorted Data:
+  - Because meteorological CSV logs are read in chronological order, inserting 
+    them sequentially into the standard templated Binary Search Tree causes the 
+    tree to skew into a right-heavy, unbalanced linear linked list.
+  - Consequently, temporal lookups degrade from the theoretical optimal 
+    O(log N) average case down to O(N) worst-case time complexity.
+
+* Linear Data-Bridging Overhead:
+  - To bridge the non-linear hierarchical database (DataDB) with the sequential 
+    statistical calculation engine (Calculate), methods like 
+    getRecordsForMonthAndYear continuously copy raw WeatherEntry objects out of 
+    the tree and into temporary linear Vector containers.
+  - This repeated data duplication increases CPU cycle overhead and dynamic 
+    heap memory allocations during heavy statistical reporting.
+
+* Spatial Memory Overhead of Nested Trees:
+  - The four-tier architecture introduces significant memory overhead. Every 
+    YearData and MonthData BST node requires two additional child pointers 
+    (m_left and m_right), and the underlying std::map adds red-black tree 
+    node-balancing metadata for every unique day.
+
+
+3. THEORETICAL JUSTIFICATION & ARCHITECTURAL RATIONALE
+--------------------------------------------------------------------------------
+* Why use a nested BST -> BST -> Map -> Vector hierarchy?
+  - Environmental sensor data is highly sparse; historical files often suffer 
+    from multi-month gaps or offline sensor periods. Pre-allocating a 
+    flat 3D array grid (e.g., records[100_years][12_months][31_days]) would 
+    waste massive amounts of memory on empty date slots.
+  - Structuring the top tiers as Binary Search Trees and Maps dynamically 
+    allocates heap memory ONLY when valid sensor data exists for that specific 
+    time period, maximizing spatial efficiency for sparse historical archives.
+
+* Why use Function Pointers with Context Payloads for BST Traversals?
+  - The Bst<T> class implements context-pointer traversals:
+    InOrderTraversal(void (*process)(T&, void*), void* userData).
+  - During Option 3 (sPCC calculation), this allows the Menu controller to 
+    pass a static callback (sPCC_Visit_Func) and an external accumulator struct 
+    (SPCC_Collector) directly into the tree. The tree traverses its nodes and 
+    executes the callback without knowing what the math algorithm is doing, 
+    preserving strict object-oriented encapsulation and keeping the BST 
+    decoupled from console I/O or domain-specific math formulas.
+
+* Why encapsulate std::vector inside a custom Vector template?
+  - Standard STL containers (except std::map) cannot be used directly under 
+    assignment rules. Wrapping std::vector inside a custom template Vector 
+    class allows the application to safely leverage STL heap memory management, 
+    dynamic capacity doubling, and deep copying, while enforcing strict 
+    application-boundary safety via custom std::out_of_range exception throwing.

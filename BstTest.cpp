@@ -10,10 +10,16 @@ void printBool(bool val)
     cout << (val ? "True" : "False") << endl;
 }
 
+// Callback function matching: void (*process)(T&, void*)
+void printNode(int& data, void*)
+{
+    cout << data << " ";
+}
+
 int main()
 {
     cout << "===================================" << endl;
-    cout << "      Bst<T> Template Testing      " << endl;
+    cout << "       Bst<T> Template Testing     " << endl;
     cout << "===================================" << endl;
 
     // 1. Initialization and isEmpty test
@@ -35,17 +41,20 @@ int main()
     cout << "Is tree empty? Expected: False | Actual: ";
     printBool(tree.isEmpty());
 
-    // 3. Traversals
+    // 3. Traversals (Updated with function pointer & nullptr context)
     cout << "\n[3] Testing Traversals:" << endl;
 
     cout << "InOrder   (Expected: 20 30 40 50 60 70 80) \nActual:   ";
-    tree.InOrderTraversal();
+    tree.InOrderTraversal(printNode, nullptr);
+    cout << endl;
 
     cout << "PreOrder  (Expected: 50 30 20 40 70 60 80) \nActual:   ";
-    tree.PreOrderTraversal();
+    tree.PreOrderTraversal(printNode, nullptr);
+    cout << endl;
 
     cout << "PostOrder (Expected: 20 40 30 60 80 70 50) \nActual:   ";
-    tree.PostOrderTraversal();
+    tree.PostOrderTraversal(printNode, nullptr);
+    cout << endl;
 
     // 4. Search
     cout << "\n[4] Testing Search Functionality:" << endl;
@@ -62,37 +71,44 @@ int main()
     cout << "Deleting Leaf Node (80)..." << endl;
     tree.DeleteNode(80);
     cout << "InOrder: ";
-    tree.InOrderTraversal(); // 80 should be missing
+    tree.InOrderTraversal(printNode, nullptr); // 80 should be missing
+    cout << endl;
 
     // Case B: Delete Node with One Child
     tree.Insert(25);
     cout << "\nAdded 25. Deleting Node with One Child (20)..." << endl;
     tree.DeleteNode(20);
     cout << "InOrder: ";
-    tree.InOrderTraversal(); // 20 missing, 25 shifts up
+    tree.InOrderTraversal(printNode, nullptr); // 20 missing, 25 shifts up
+    cout << endl;
 
     // Case C: Delete Node with Two Children
     cout << "\nDeleting Node with Two Children (Root: 50)..." << endl;
     tree.DeleteNode(50);
     cout << "InOrder: ";
-    tree.InOrderTraversal(); // 50 missing, replaced by 60 (min of right subtree)
+    tree.InOrderTraversal(printNode, nullptr); // 50 missing, replaced by 60 (min of right subtree)
+    cout << endl;
 
     // 6. Deep Copy Testing (Copy Constructor)
     cout << "\n[6] Testing Copy Constructor (Deep Copy):" << endl;
     Bst<int> treeCopy(tree);
 
     cout << "Original tree InOrder: ";
-    tree.InOrderTraversal();
+    tree.InOrderTraversal(printNode, nullptr);
+    cout << endl;
     cout << "Copied tree InOrder:   ";
-    treeCopy.InOrderTraversal();
+    treeCopy.InOrderTraversal(printNode, nullptr);
+    cout << endl;
 
     cout << "Modifying Original (Inserting 999)..." << endl;
     tree.Insert(999);
 
     cout << "Original tree InOrder: ";
-    tree.InOrderTraversal();      // Should have 999
+    tree.InOrderTraversal(printNode, nullptr);       // Should have 999
+    cout << endl;
     cout << "Copied tree InOrder:   ";
-    treeCopy.InOrderTraversal();  // Should NOT have 999
+    treeCopy.InOrderTraversal(printNode, nullptr);   // Should NOT have 999
+    cout << endl;
 
     // 7. Assignment Operator Testing
     cout << "\n[7] Testing Assignment Operator:" << endl;
@@ -100,15 +116,18 @@ int main()
     treeAssigned = treeCopy; // Assign from the copy (no 999)
 
     cout << "Assigned tree InOrder: ";
-    treeAssigned.InOrderTraversal();
+    treeAssigned.InOrderTraversal(printNode, nullptr);
+    cout << endl;
 
     cout << "Modifying Copied tree (Deleting 70)..." << endl;
     treeCopy.DeleteNode(70);
 
     cout << "Copied tree InOrder:   ";
-    treeCopy.InOrderTraversal();      // Should not have 70
+    treeCopy.InOrderTraversal(printNode, nullptr);       // Should not have 70
+    cout << endl;
     cout << "Assigned tree InOrder: ";
-    treeAssigned.InOrderTraversal();  // Should still have 70
+    treeAssigned.InOrderTraversal(printNode, nullptr);   // Should still have 70
+    cout << endl;
 
     // 8. Destroy Tree
     cout << "\n[8] Testing DestroyTree:" << endl;

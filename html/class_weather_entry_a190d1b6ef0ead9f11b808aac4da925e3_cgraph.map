@@ -1,0 +1,9 @@
+<map id="WeatherEntry::operator==" name="WeatherEntry::operator==">
+<area shape="rect" id="node1" title=" " alt="" coords="5,132,179,159"/>
+<area shape="rect" id="node2" href="$class_date.html#a6304a67f1c13b239eb8e80ad68161e40" title="Gets the day integer." alt="" coords="237,5,339,32"/>
+<area shape="rect" id="node3" href="$class_time.html#aaf65e0dc73514ffab9b3dd643cef9bdb" title="Gets the hour of the Time object." alt="" coords="235,56,341,83"/>
+<area shape="rect" id="node4" href="$class_time.html#a86302564cc0783b402dc5f0e137a43c1" title="Gets the minute of the Time object." alt="" coords="229,107,347,133"/>
+<area shape="rect" id="node5" href="$class_date.html#af2dcc6ce51dbb2bd798499a149bdffb7" title="Gets the month integer." alt="" coords="231,157,345,184"/>
+<area shape="rect" id="node6" href="$class_time.html#a53582e9b9f6f0da1db2d3e9d11df04bc" title="Gets the second of the Time object." alt="" coords="227,208,349,235"/>
+<area shape="rect" id="node7" href="$class_date.html#ad79ce504482f317ddcfdc4ecad77671f" title="Gets the year integer." alt="" coords="235,259,341,285"/>
+</map>

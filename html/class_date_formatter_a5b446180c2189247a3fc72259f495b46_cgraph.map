@@ -1,0 +1,6 @@
+<map id="DateFormatter::ToLocale" name="DateFormatter::ToLocale">
+<area shape="rect" id="node1" title="Formats a Date object into a readable locale string (e.g., &quot;16 February 2000&quot;)." alt="" coords="5,56,171,83"/>
+<area shape="rect" id="node2" href="$class_date.html#a6304a67f1c13b239eb8e80ad68161e40" title="Gets the day integer." alt="" coords="225,5,327,32"/>
+<area shape="rect" id="node3" href="$class_date.html#af2dcc6ce51dbb2bd798499a149bdffb7" title="Gets the month integer." alt="" coords="219,56,333,83"/>
+<area shape="rect" id="node4" href="$class_date.html#ad79ce504482f317ddcfdc4ecad77671f" title="Gets the year integer." alt="" coords="223,107,329,133"/>
+</map>

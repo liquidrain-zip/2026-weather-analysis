@@ -1,0 +1,6 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,56,83"/>
+<area shape="rect" id="node2" href="$class_vector.html#af77df1afa4a7fee6e6a2f4524b545c38" title="Deletes the element at the specified index." alt="" coords="111,5,217,32"/>
+<area shape="rect" id="node3" href="$class_vector.html#a75165d58190702b6e1131dc61c1e3a45" title="Gets the count value tracking utilized index data records." alt="" coords="104,56,224,83"/>
+<area shape="rect" id="node4" href="$class_vector.html#a554169987168b63ae4e87f5de0c13561" title="Inserts an element item target into a specific array position." alt="" coords="114,107,214,133"/>
+</map>

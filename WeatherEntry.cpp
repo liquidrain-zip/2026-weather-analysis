@@ -41,8 +41,6 @@ float WeatherEntry::GetSolarRadiation() const
     return m_solarRadiation;
 }
 
-// --- Setters ---
-
 void WeatherEntry::SetDate(const Date& date)
 {
     m_date = date;
