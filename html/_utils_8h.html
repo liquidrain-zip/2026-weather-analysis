@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Assignment 2: Utils.h File Reference</title>
+<title>Assignment2: Utils.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Assignment 2
+   <div id="projectname">Assignment2
    </div>
   </td>
  </tr>
@@ -146,8 +146,13 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_month_data.html">MonthData</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a container for weather data organized by month.  <a href="struct_month_data.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_year_data.html">YearData</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a container for weather data organized by year.  <a href="struct_year_data.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_c_c___collector.html">SPCC_Collector</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A context payload structure used during BST traversals to accumulate weather data for statistical analysis.  <a href="struct_s_p_c_c___collector.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
@@ -156,9 +161,10 @@ Typedefs</h2></td></tr>
 <tr class="separator:a80dd1de1376cfd4c690ef4076e6bb2f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4146c52dcc46e3b6b260c26999cef35"><td class="memItemLeft" align="right" valign="top">typedef map&lt; int, <a class="el" href="_utils_8h.html#a80dd1de1376cfd4c690ef4076e6bb2f1">WeatherData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_utils_8h.html#ae4146c52dcc46e3b6b260c26999cef35">DayMap</a></td></tr>
 <tr class="separator:ae4146c52dcc46e3b6b260c26999cef35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11f51d75414b1b4f23bbcb87adf03c8e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a11f51d75414b1b4f23bbcb87adf03c8e"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_utils_8h.html#a11f51d75414b1b4f23bbcb87adf03c8e">visit_t</a> = void(*)(T &amp;, void *)</td></tr>
-<tr class="separator:a11f51d75414b1b4f23bbcb87adf03c8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b5d786f23e9d18c691b23d24dbbebf8"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a8b5d786f23e9d18c691b23d24dbbebf8"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_utils_8h.html#a8b5d786f23e9d18c691b23d24dbbebf8">visit_t</a> = void(*)(T &amp;, void *)</td></tr>
+<tr class="memdesc:a8b5d786f23e9d18c691b23d24dbbebf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type alias for a traversal callback function pointer.  <a href="_utils_8h.html#a8b5d786f23e9d18c691b23d24dbbebf8">More...</a><br /></td></tr>
+<tr class="separator:a8b5d786f23e9d18c691b23d24dbbebf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -188,8 +194,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a11f51d75414b1b4f23bbcb87adf03c8e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a11f51d75414b1b4f23bbcb87adf03c8e">&#9670;&nbsp;</a></span>visit_t</h2>
+<a id="a8b5d786f23e9d18c691b23d24dbbebf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b5d786f23e9d18c691b23d24dbbebf8">&#9670;&nbsp;</a></span>visit_t</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -197,12 +203,27 @@ Variables</h2></td></tr>
 template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="_utils_8h.html#a11f51d75414b1b4f23bbcb87adf03c8e">visit_t</a> =  void (*)(T&amp;, void*)</td>
+          <td class="memname"><a class="el" href="_utils_8h.html#a8b5d786f23e9d18c691b23d24dbbebf8">visit_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_utils_8h_source.html#l00079">79</a> of file <a class="el" href="_utils_8h_source.html">Utils.h</a>.</p>
+<p>Type alias for a traversal callback function pointer. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The data type of the element stored within the node being visited. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">T&amp;</td><td>A reference to the data payload inside the currently visited tree node. </td></tr>
+    <tr><td class="paramname">void*</td><td>A generic void pointer used to pass external context or accumulator state into the callback. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_utils_8h_source.html#l00100">100</a> of file <a class="el" href="_utils_8h_source.html">Utils.h</a>.</p>
 
 </div>
 </div>
@@ -298,7 +319,7 @@ template&lt;typename T &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="_utils_8h.html">Utils.h</a></li>
-    <li class="footer">Generated on Sun Jul 19 2026 17:20:07 for Assignment 2 by
+    <li class="footer">Generated on Tue Jul 21 2026 18:41:29 for Assignment2 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['safe_108',['safe',['../evaluation_8txt.html#aa59bb6d2f134594153c043cdef2a6718',1,'evaluation.txt']]],
-  ['search_109',['Search',['../class_bst.html#a4334e50ea5cfbc123c51fcba868e2de4',1,'Bst::Search(const T &amp;data)'],['../class_bst.html#a076c5a039cc9cbd93a8929f8c7eb703d',1,'Bst::Search(const T &amp;data) const'],['../class_bst.html#ae1470f01cd541393ff64d177b638f4df',1,'Bst::search(Node&lt; T &gt; *p, const T &amp;data) const']]],
+  ['search_109',['search',['../class_bst.html#ae1470f01cd541393ff64d177b638f4df',1,'Bst::search(Node&lt; T &gt; *p, const T &amp;data) const'],['../class_bst.html#a4334e50ea5cfbc123c51fcba868e2de4',1,'Bst::Search(const T &amp;data)'],['../class_bst.html#a076c5a039cc9cbd93a8929f8c7eb703d',1,'Bst::Search(const T &amp;data) const']]],
   ['setdate_110',['SetDate',['../class_weather_entry.html#a4f88b44ce2d41c28006fbf606ffe3833',1,'WeatherEntry']]],
   ['setday_111',['SetDay',['../class_date.html#a7b6f3262997530ea44b84dc1ff818690',1,'Date']]],
   ['sethour_112',['SetHour',['../class_time.html#a7db605d36da2d61943c4084520425759',1,'Time']]],

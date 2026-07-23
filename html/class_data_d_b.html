@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Assignment 2: DataDB Class Reference</title>
+<title>Assignment2: DataDB Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Assignment 2
+   <div id="projectname">Assignment2
    </div>
   </td>
  </tr>
@@ -102,10 +102,10 @@ Collaboration diagram for DataDB:</div>
 <area shape="rect" title="Encapsulates the Year&#45;&gt;Month&#45;&gt;Day nested data structure." alt="" coords="267,2137,394,2273"/>
 <area shape="rect" href="class_bst.html" title=" " alt="" coords="255,1689,407,2075"/>
 <area shape="rect" href="struct_node.html" title=" " alt="" coords="132,1549,263,1627"/>
-<area shape="rect" href="struct_year_data.html" title=" " alt="" coords="150,1365,255,1487"/>
+<area shape="rect" href="struct_year_data.html" title="Represents a container for weather data organized by year." alt="" coords="150,1365,255,1487"/>
 <area shape="rect" href="class_bst.html" title=" " alt="" coords="131,917,283,1303"/>
 <area shape="rect" href="struct_node.html" title=" " alt="" coords="61,623,200,701"/>
-<area shape="rect" href="struct_month_data.html" title=" " alt="" coords="138,285,243,407"/>
+<area shape="rect" href="struct_month_data.html" title="Represents a container for weather data organized by month." alt="" coords="138,285,243,407"/>
 <area shape="rect" title=" " alt="" coords="106,145,275,223"/>
 <area shape="rect" title=" " alt="" coords="167,5,214,83"/>
 <area shape="rect" href="struct_node.html" title="Represents a node in the Binary Search Tree." alt="" coords="5,293,88,399"/>
@@ -125,8 +125,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab051c795afed8096291441cdf97ad1b2"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_day_map.html">DayMap</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_d_b.html#ab051c795afed8096291441cdf97ad1b2">GetMonthData</a> (int y, int m) const</td></tr>
 <tr class="memdesc:ab051c795afed8096291441cdf97ad1b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the map of day-data for a specific month and year.  <a href="class_data_d_b.html#ab051c795afed8096291441cdf97ad1b2">More...</a><br /></td></tr>
 <tr class="separator:ab051c795afed8096291441cdf97ad1b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a917ed958d1a678f9536eb53afa8ab5f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_d_b.html#a917ed958d1a678f9536eb53afa8ab5f8">TraverseYears</a> (<a class="el" href="_utils_8h.html#a11f51d75414b1b4f23bbcb87adf03c8e">visit_t</a>&lt; <a class="el" href="struct_year_data.html">YearData</a> &gt; visit_func, void *userData)</td></tr>
-<tr class="memdesc:a917ed958d1a678f9536eb53afa8ab5f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Traverses the Year BST, calling the visit function on each <a class="el" href="struct_year_data.html">YearData</a>.  <a href="class_data_d_b.html#a917ed958d1a678f9536eb53afa8ab5f8">More...</a><br /></td></tr>
+<tr class="memitem:a917ed958d1a678f9536eb53afa8ab5f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_d_b.html#a917ed958d1a678f9536eb53afa8ab5f8">TraverseYears</a> (<a class="el" href="_utils_8h.html#a8b5d786f23e9d18c691b23d24dbbebf8">visit_t</a>&lt; <a class="el" href="struct_year_data.html">YearData</a> &gt; visit_func, void *userData)</td></tr>
+<tr class="memdesc:a917ed958d1a678f9536eb53afa8ab5f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Traverses the Year BST, calling the visit function on each <a class="el" href="struct_year_data.html" title="Represents a container for weather data organized by year.">YearData</a>.  <a href="class_data_d_b.html#a917ed958d1a678f9536eb53afa8ab5f8">More...</a><br /></td></tr>
 <tr class="separator:a917ed958d1a678f9536eb53afa8ab5f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
@@ -319,7 +319,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="memname">void DataDB::TraverseYears </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="_utils_8h.html#a11f51d75414b1b4f23bbcb87adf03c8e">visit_t</a>&lt; <a class="el" href="struct_year_data.html">YearData</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="_utils_8h.html#a8b5d786f23e9d18c691b23d24dbbebf8">visit_t</a>&lt; <a class="el" href="struct_year_data.html">YearData</a> &gt;&#160;</td>
           <td class="paramname"><em>visit_func</em>, </td>
         </tr>
         <tr>
@@ -336,7 +336,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Traverses the Year BST, calling the visit function on each <a class="el" href="struct_year_data.html">YearData</a>. </p>
+<p>Traverses the Year BST, calling the visit function on each <a class="el" href="struct_year_data.html" title="Represents a container for weather data organized by year.">YearData</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">visit_func</td><td>The function pointer to call. </td></tr>
@@ -404,7 +404,7 @@ Here is the caller graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_data_d_b.html">DataDB</a></li>
-    <li class="footer">Generated on Sun Jul 19 2026 17:20:07 for Assignment 2 by
+    <li class="footer">Generated on Tue Jul 21 2026 18:41:31 for Assignment2 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

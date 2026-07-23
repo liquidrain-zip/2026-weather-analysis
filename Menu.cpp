@@ -1,14 +1,5 @@
 #include "Menu.h"
 
-// Collector and visit callback for option 3 tree traversal
-struct SPCC_Collector
-{
-    int targetMonth;
-    Vector<float> all_S;
-    Vector<float> all_T;
-    Vector<float> all_R;
-};
-
 static void sPCC_Visit_Func(YearData& yearData, void* userData)
 {
     SPCC_Collector* collector = static_cast<SPCC_Collector*>(userData);
@@ -31,7 +22,6 @@ static void sPCC_Visit_Func(YearData& yearData, void* userData)
         }
     }
 }
-
 
 void Menu::DisplayMenu()
 {
@@ -401,4 +391,4 @@ void Menu::outputSummary(int year, const DataDB& weatherData) const
     }
 
     outputFile.close();
-} // FIXED: Removed trailing extra closing brace
+}

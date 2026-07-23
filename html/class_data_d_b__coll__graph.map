@@ -2,10 +2,10 @@
 <area shape="rect" id="node1" title="Encapsulates the Year&#45;&gt;Month&#45;&gt;Day nested data structure." alt="" coords="267,2137,394,2273"/>
 <area shape="rect" id="node2" href="$class_bst.html" title=" " alt="" coords="255,1689,407,2075"/>
 <area shape="rect" id="node3" href="$struct_node.html" title=" " alt="" coords="132,1549,263,1627"/>
-<area shape="rect" id="node4" href="$struct_year_data.html" title=" " alt="" coords="150,1365,255,1487"/>
+<area shape="rect" id="node4" href="$struct_year_data.html" title="Represents a container for weather data organized by year." alt="" coords="150,1365,255,1487"/>
 <area shape="rect" id="node5" href="$class_bst.html" title=" " alt="" coords="131,917,283,1303"/>
 <area shape="rect" id="node6" href="$struct_node.html" title=" " alt="" coords="61,623,200,701"/>
-<area shape="rect" id="node7" href="$struct_month_data.html" title=" " alt="" coords="138,285,243,407"/>
+<area shape="rect" id="node7" href="$struct_month_data.html" title="Represents a container for weather data organized by month." alt="" coords="138,285,243,407"/>
 <area shape="rect" id="node8" title=" " alt="" coords="106,145,275,223"/>
 <area shape="rect" id="node9" title=" " alt="" coords="167,5,214,83"/>
 <area shape="rect" id="node10" href="$struct_node.html" title="Represents a node in the Binary Search Tree." alt="" coords="5,293,88,399"/>

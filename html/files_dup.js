@@ -20,7 +20,7 @@ var files_dup =
     ] ],
     [ "DateTest.cpp", "_date_test_8cpp.html", "_date_test_8cpp" ],
     [ "main.cpp", "main_8cpp.html", "main_8cpp" ],
-    [ "Menu.cpp", "_menu_8cpp.html", "_menu_8cpp" ],
+    [ "Menu.cpp", "_menu_8cpp.html", null ],
     [ "Menu.h", "_menu_8h.html", [
       [ "Menu", "class_menu.html", "class_menu" ]
     ] ],

@@ -1,5 +1,5 @@
 <map id="SPCC_Collector" name="SPCC_Collector">
-<area shape="rect" id="node1" title=" " alt="" coords="5,921,121,999"/>
+<area shape="rect" id="node1" title="A context payload structure used during BST traversals to accumulate weather data for statistical ana..." alt="" coords="5,921,121,999"/>
 <area shape="rect" id="node2" href="$class_vector.html" title=" " alt="" coords="9,620,117,829"/>
 <area shape="rect" id="node3" title=" " alt="" coords="17,247,121,324"/>
 <area shape="rect" id="node4" title=" " alt="" coords="97,5,153,83"/>
